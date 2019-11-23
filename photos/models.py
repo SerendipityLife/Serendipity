@@ -5,7 +5,7 @@ import os
 
 
 def upload_file(instance, filename):
-    return(f'files/{instance.from_user.pk}/{instance.id}_{filename}')
+    return(f'photo_files/user_photos/{instance.from_user.pk}/{instance.id}_{filename}')
 
 class Photo_info(models.Model):
     period = models.IntegerField(default=0)
