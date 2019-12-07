@@ -1,0 +1,5 @@
+django == 2.1.14
+coverage
+pylint
+pytest
+# pillow

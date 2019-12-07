@@ -1,0 +1,33 @@
+{
+	"name": "serendipity",
+	"dockerFile": "Dockerfile",
+	"settings": { 
+		"terminal.integrated.shell.linux": "/bin/bash",
+		"python.pythonPath": "/usr/bin/python3",
+		"python.linting.enabled": true,
+		"python.linting.pylintEnabled": true,
+		"python.linting.pylintPath": "/usr/bin/pylint"
+	},
+	"workspaceMount": "src=${localWorkspaceFolder},dst=/home/vscode/app,type=bind,consistency=cached",
+	"workspaceFolder": "/home/vscode/app",
+	// Uncomment the next line to run commands after the container is created.
+	"postCreateCommand": "pip3 install -r requirements.txt",
+	
+	// Uncomment the next line if you want to publish any ports.
+	"appPort": [3000],
+
+
+	// Uncomment the next line to use a non-root user. On Linux, this will prevent
+	// new files getting created as root, but you may need to update the USER_UID
+	// and USER_GID in .devcontainer/Dockerfile to match your user if not 1000.
+	// "runArgs": [
+	// 	"-v", "${env:HOME}/.gitconfig:/root/"
+	// ],
+
+	// Add the IDs of extensions you want installed when the container is created in the array below.
+	"extensions": [
+		"ms-python.python",
+		"visualstudioexptteam.vscodeintellicode",
+		"eamodio.gitlens"
+	]
+}
