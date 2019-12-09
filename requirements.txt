@@ -1,4 +1,4 @@
-django == 2.1.14
+django == 3.0
 coverage
 pylint
 pytest
