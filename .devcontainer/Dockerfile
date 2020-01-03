@@ -9,7 +9,7 @@ ENV APP_HOME=${USER_HOME}/app
 
 RUN yum update -y \
     # Install middlewares and modules
-    && yum install shadow-utils tar sudo git procps python3.7.4 python3-pip -y \
+    && yum install shadow-utils tar sudo git procps python3-devel mysql-devel -y \
     # Set up user config
     && groupadd --gid ${USER_GID} ${USERNAME}  \
     && useradd -c "vscode app user" -m -s /bin/bash --uid ${USER_UID} --gid ${USER_GID} ${USERNAME} \
@@ -23,5 +23,7 @@ RUN yum update -y \
     && yum clean all -y \
     && rm -rf  /var/cache/yum \
     ;
+
+WORKDIR /home/vscode/app
 
 # USER ${USERNAME}
