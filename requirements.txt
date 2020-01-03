@@ -1,4 +1,5 @@
 django == 2.1.14
+mysql-connector-python
 coverage
 pylint
 pytest

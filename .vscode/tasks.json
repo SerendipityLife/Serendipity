@@ -4,6 +4,11 @@
     "version": "2.0.0",
     "tasks": [
         {
+            "label": "migrate-django",
+            "type": "shell",
+            "command": "echo 'migrate django' && python3 ${workspaceFolder}/manage.py makemigrations && python3 ${workspaceFolder}/manage.py migrate"
+        },
+        {
             "label": "kill-django",
             "type": "shell",
             "command": "echo 'stopping django' && kill $(ps -aux | grep 'manage.py' | awk '{print $2}' | head -1)"

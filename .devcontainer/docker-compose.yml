@@ -1,5 +1,39 @@
 version: "3"
 services:
+  reverseproxy:
+    image: nginx:latest
+    container_name: reverseproxy
+    ports:
+      - "3000:8000"
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+    labels:
+      reverseproxy.description: "Nginx reverse proxy"
+    depends_on:
+      - serendipity
+    networks:
+      - front_net
+      - back_net
+
+  serendipity:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: serendipity
+    volumes:
+      - ../.:/home/vscode/app:cached
+      - ~/.gitconfig:/home/vscode/.gitconfig
+    command: /bin/sh -c "while sleep 1000; do :; done"
+    ports:
+      - "8000"
+    depends_on:
+      - database1
+    labels:
+      serendipity.description: "Django Application"
+    networks:
+      - back_net
+      - db_net
+
   database1:
     image: mysql:5.7
     container_name: database1
@@ -7,29 +41,21 @@ services:
       MYSQL_ROOT_PASSWORD: rootpass
       MYSQL_USER: dev
       MYSQL_PASSWORD: devpass
-      TZ: "Asia/Seoul"
+      MYSQL_DATABASE: test01
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     volumes:
-      - ./sql/testdb:/docker-entrypoint-initdb.d
+      - ./mysql/test01:/docker-entrypoint-initdb.d
     ports:
-      - 3306:3306
+      - "3306:3306"
+    tty: true
     restart: always
     networks:
-      - serendipity_net
-
-  serendipity:
-    container_name: serendipity
-    build:
-      context: .
-      dockerfile: Dockerfile
-    volumes:
-      - ../.:/home/vscode/app:cached
-      - ~/.gitconfig:/home/vscode/.gitconfig
-    command: /bin/sh -c "while sleep 1000; do :; done"
-    labels:
-      serendipity.description: "Django Application"
-    networks:
-      - serendipity_net
+      - db_net
 
 networks:
-  serendipity_net:
+  front_net:
+    driver: bridge
+  back_net:
+    driver: bridge
+  db_net:
+    driver: bridge
