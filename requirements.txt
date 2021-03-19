@@ -3,4 +3,4 @@ mysql-connector-python
 coverage
 pylint
 pytest
-pillow == 6.2.1
+pillow == 8.1.1
